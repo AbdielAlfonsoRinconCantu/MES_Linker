@@ -1,6 +1,7 @@
 # MES_Linker
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
+![License](https://img.shields.io/badge/license-%20%20GNU%20GPLv3%20-green?style=plastic)
 
 TCP/IP server template for industrial MES w/ GUI
 
@@ -9,7 +10,9 @@ TCP/IP server template for industrial MES w/ GUI
 ## Table of contents
 
 1. [Overview](#overview)
-
+2. [Installation](#installation)
+3. [Usage](#usage)
+4. [Developer's guide](#developers-guide)
 
 ## Overview
 
@@ -90,6 +93,8 @@ In `Main_screen_Header_frame`, add:
 <your_socket>_Socket_button.pack(...)
 ```
 
+<br>
+
 ### Handling new messages:
 
 In `received_message_interpreter()`, add:
@@ -101,6 +106,7 @@ match server_name:
 ...
 ```
 
+<br>
 
 ### Adding new persistent variables:
 
@@ -115,7 +121,12 @@ defaults = { ..., "<your_variable>": <your_default_value>, ...}
 
 In `MES_Linker_Settings_Save()` add:
 ```python
-data = { ... "<your_variable>": <your_variable>, ... }
+data = {
+        ... ,
+        "<your_variable>": <your_variable>
+}
+
+...
 
 <your_variable> = <your_variable>_text_box.get().strip()
 ```
