@@ -18,30 +18,26 @@ A python-based socket TCP/IP GUI for connecting two clients, every message `Devi
 
 ## Installation
 
+### Using .exe
+Download `MES_Linker.exe`.
+
+### Using Python
 Make sure the following is installed:
 - [python](https://www.python.org/downloads/)
 
 - [py-window-styles](https://github.com/Akascape/py-window-styles)
 
 - [Sun-Valley-ttk-theme](https://github.com/rdbende/Sun-Valley-ttk-theme)
-  
-```bash
-pip install sv-ttk pywinstyles
-```
 
-### Using .exe
-Download `MES_Linker.exe`.
-
-### Using Python
 On a terminal:
 ```bash
+pip install sv-ttk pywinstyles
 git clone https://github.com/AbdielAlfonsoRinconCantu/MES_Linker.git
 ```
 
-
 ## Usage
 ### Using .exe
-Double-click `MES_Linker.exe`
+Double-click `MES_Linker.exe`.
 
 
 ### Using Python
@@ -69,20 +65,29 @@ threading.Thread(target=build_a_socket, args=(<your_socket>_Socket_button,
     "<your_socket>", <your_socket>_Socket_Host, <your_socket>_Socket_Port, <your_socket>_Queue)).start()
 ```
 
-In `Change_addresses_button_Function()` add:
+In `Change_addresses_button_Function()`, add:
 ```python
 targets = [
     ...
 
-    <your_socket>, <your_socket>_text_box, [...] ]` and `<your_socket>_Label` and `<your_socket>_text_box
+    ('<your_socket>', <your_socket>_text_box),
 
     ...
 ]
+
+...
+
+<your_socket>_Label = ...
+<your_socket>_Label.grid(...)
+<your_socket>_text_box = ...
+<your_socket>_text_box.grid(...)
+<your_socket>_text_box.insert(...)
 ```
 
 In `Main_screen_Header_frame`, add:
 ```python
 <your_socket>_button = ...
+<your_socket>_Socket_button.pack(...)
 ```
 
 ### Handling new messages:
@@ -101,7 +106,7 @@ match server_name:
 
 In `MES_Linker_Settings_Load()`, add:
 ```python
-defaults = { ... "<your_variable>": <your_default_value>, ...}
+defaults = { ..., "<your_variable>": <your_default_value>, ...}
 
 ...
 
@@ -110,7 +115,9 @@ defaults = { ... "<your_variable>": <your_default_value>, ...}
 
 In `MES_Linker_Settings_Save()` add:
 ```python
-data = { [...] "<your_variable>": <your_variable>, [...] }` and `<your_variable> = <your_variable_text_box.get().strip()>
+data = { ... "<your_variable>": <your_variable>, ... }
+
+<your_variable> = <your_variable>_text_box.get().strip()
 ```
 
 In `Change_station_button_Function()` add:
