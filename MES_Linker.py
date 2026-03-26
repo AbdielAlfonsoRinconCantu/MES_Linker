@@ -288,7 +288,7 @@ def main():
             "MES_Socket_Port": settings.MES_Socket_Port
         }
         
-        data = vars(settings) # new
+        data = vars(settings)
         
         with open(MES_Linker_Settings, "w") as f:
             json.dump(data, f, indent=4, sort_keys=True)
