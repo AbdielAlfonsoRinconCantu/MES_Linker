@@ -121,7 +121,6 @@ data = {
         ... ,
         "<your_variable>": settings.<your_variable>
        }
-...
 ```
 
 In `Change_station_button_Function()` add:
