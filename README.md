@@ -22,7 +22,7 @@ A python-based socket TCP/IP GUI for connecting two clients, every message `Devi
 ## Installation
 
 ### Using .exe
-Download `MES_Linker.exe`.
+Download `MES_Linker.exe` and `icon.ico`.
 
 ### Using Python
 Make sure the following is installed:
@@ -40,7 +40,7 @@ git clone https://github.com/AbdielAlfonsoRinconCantu/MES_Linker.git
 
 ## Usage
 ### Using .exe
-Double-click `MES_Linker.exe`.
+Make sure `icon.ico` is in the same directory as `MES_Linker.exe`, then, double-click it.
 
 
 ### Using Python
