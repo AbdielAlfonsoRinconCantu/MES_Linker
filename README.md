@@ -115,7 +115,7 @@ defaults = {
            }
 ```
 
-In `MES_Linker_Settings_Save()` add:
+In `MES_Linker_Settings_Save()`, add:
 ```python
 data = {
         ... ,
@@ -123,7 +123,7 @@ data = {
        }
 ```
 
-In `Change_station_button_Function()` add:
+In `Change_station_button_Function()`, add:
 ```python
 settings.<your_variable> = <your_variable>_text_box.get().strip()
 
