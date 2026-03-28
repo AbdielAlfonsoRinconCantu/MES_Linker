@@ -65,18 +65,16 @@ In `# Queues`, add:
 In `Start_socket_threads()`, add:
 ```python
 threading.Thread(target=build_a_socket, args=(<your_socket>_Socket_button,
-    "<your_socket>", <your_socket>_Socket_Host, <your_socket>_Socket_Port, <your_socket>_Queue)).start()
+    "<your_socket>", settings.<your_socket>_Socket_Host, settings.<your_socket>_Socket_Port, <your_socket>_Queue)).start()
 ```
 
 In `Change_addresses_button_Function()`, add:
 ```python
 targets = [
     ...
-
     ('<your_socket>', <your_socket>_text_box),
-
     ...
-]
+    ]
 
 ...
 
@@ -100,9 +98,8 @@ In `Main_screen_Header_frame`, add:
 In `received_message_interpreter()`, add:
 ```python
 match server_name:
-...
     case "<your_socket>":
-        # write your logic here
+        # write your functionality here
 ...
 ```
 
@@ -112,27 +109,27 @@ match server_name:
 
 In `MES_Linker_Settings_Load()`, add:
 ```python
-defaults = { ..., "<your_variable>": <your_default_value>, ...}
-
-...
-
-<your_variable> = MES_Linker_Settings_Load()["<your_variable>"]
+defaults = {
+            ... ,
+            "<your_variable>": <your_default_value>
+           }
 ```
 
 In `MES_Linker_Settings_Save()` add:
 ```python
 data = {
         ... ,
-        "<your_variable>": <your_variable>
-}
-
+        "<your_variable>": settings.<your_variable>
+       }
 ...
-
-<your_variable> = <your_variable>_text_box.get().strip()
 ```
 
 In `Change_station_button_Function()` add:
 ```python
+settings.<your_variable> = <your_variable>_text_box.get().strip()
+
+...
+
 <your_variable>_Label = ...
 <your_variable>_Label.grid(...)
 <your_variable>_text_box = ...
