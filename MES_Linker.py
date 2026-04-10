@@ -5,19 +5,18 @@
 print("Initializing MES Linker...")
 print("Importing libraries...")
 
-import pywinstyles
-import os
-import shutil
-import datetime
-import socket
-import threading
-import queue
-import tkinter as tk
-import sv_ttk
-import json
-from tkinter import ttk, font, filedialog
 from types import SimpleNamespace
-
+from tkinter import ttk, font, filedialog
+import json
+import sv_ttk
+import tkinter as tk
+import queue
+import threading
+import socket
+import datetime
+import shutil
+import os
+import pywinstyles
 
 print("Importing libraries SUCCESS \n")
 
@@ -38,24 +37,25 @@ Active_Sockets = []
 
 
 def MES_Linker_Settings_Load():
-    
+
     defaults = {
-                    "Station_Name": "Station_Name",
-                    "Station_Line": "Station_Line",
-                    "Station_Type": "Station_Type",
-                    "Station_OPID": "Station_OPID",
-                    "MES_folder_path": f"{os.getcwd()}",
-                    "Device_1_Socket_Host": "127.0.0.2",
-                    "Device_1_Socket_Port": 65431,
-                    "MES_Socket_Host": "127.0.0.2",
-                    "MES_Socket_Port": 65432
-                }
-    
+        "Station_Name": "Station_Name",
+        "Station_Line": "Station_Line",
+        "Station_Type": "Station_Type",
+        "Station_OPID": "Station_OPID",
+        "MES_folder_path": f"{os.getcwd()}",
+        "Device_1_Socket_Host": "127.0.0.2",
+        "Device_1_Socket_Port": 65431,
+        "MES_Socket_Host": "127.0.0.2",
+        "MES_Socket_Port": 65432
+    }
+
     try:
         with open(MES_Linker_Settings, "r") as f:
             return {**defaults, **json.load(f)}
     except:
         return defaults
+
 
 settings = SimpleNamespace(**MES_Linker_Settings_Load())
 
@@ -220,7 +220,7 @@ def main():
 
             for name, widget in targets:
                 host, port = widget.get().strip().split(':')
-                
+
                 setattr(settings, f"{name}_Host", host)
                 setattr(settings, f"{name}_Port", int(port))
 
@@ -287,9 +287,9 @@ def main():
             "MES_Socket_Host": settings.MES_Socket_Host,
             "MES_Socket_Port": settings.MES_Socket_Port
         }
-        
+
         data = vars(settings)
-        
+
         with open(MES_Linker_Settings, "w") as f:
             json.dump(data, f, indent=4, sort_keys=True)
 
@@ -365,7 +365,7 @@ def main():
 # -------------------------------------------- Change MES folder function ------------------------------------------------------------------------- #
 
     def Change_MES_folder_button_Function():
-        
+
         settings.MES_folder_path = filedialog.askdirectory()
         UI_terminal_Queue.put(f"MES folder: {settings.MES_folder_Path}")
         MES_Linker_Settings_Save()
