@@ -14,10 +14,13 @@ TCP/IP server template for industrial MES w/ GUI
 3. [Usage](#usage)
 4. [Developer's guide](#developers-guide)
 
+<br>
+
 ## Overview
 
 A python-based socket TCP/IP GUI for connecting two clients, every message `Device_1` receives will be forwarded to `MES Socket`, this app is meant as an open-source fast-template for creating local MES apps to route communications between various devices and a database (`MES Socket`).
 
+<br>
 
 ## Installation
 
@@ -38,6 +41,8 @@ pip install sv-ttk pywinstyles
 git clone https://github.com/AbdielAlfonsoRinconCantu/MES_Linker.git
 ```
 
+<br>
+
 ## Usage
 ### Using .exe
 Make sure `icon.ico` is in the same directory as `MES_Linker.exe`, then, double-click it.
@@ -50,6 +55,7 @@ cd ~/MES_Linker
 python MES_Linker.py
 ```
 
+<br>
 
 ## Developer's guide
 
