@@ -51,18 +51,18 @@ other_variables = {
     "MES_folder_path": f"{os.getcwd()}",
 }
 
+all_variables = {**station_variables, **address_variables, **other_variables}
+
 # ------------------------------------------------ Global functions ------------------------------------------------------------------------------- #
 
 
 def MES_Linker_Settings_Load():
 
-    defaults = {**station_variables, **address_variables, **other_variables}
-
     try:
         with open(MES_Linker_Settings, "r") as f:
-            return {**defaults, **json.load(f)}
+            return {**all_variables, **json.load(f)}
     except:
-        return defaults
+        return all_variables
 
 
 settings = SimpleNamespace(**MES_Linker_Settings_Load())
@@ -284,17 +284,11 @@ def main():
 # -------------------------------------------- Change Station function ---------------------------------------------------------------------------- #
 
     def MES_Linker_Settings_Save():
-        data = {
-            "Station_Name": settings.Station_Name,
-            "Station_Line": settings.Station_Line,
-            "Station_Type": settings.Station_Type,
-            "Station_OPID": settings.Station_OPID,
-            "MES_folder_Path": settings.MES_folder_path,
-            "Device_1_Socket_Host": settings.Device_1_Socket_Host,
-            "Device_1_Socket_Port": settings.Device_1_Socket_Port,
-            "MES_Socket_Host": settings.MES_Socket_Host,
-            "MES_Socket_Port": settings.MES_Socket_Port
-        }
+        
+        data = {}
+
+        for key in all_variables:
+            data[key] = getattr(settings, key)
 
         data = vars(settings)
 
@@ -354,7 +348,7 @@ def main():
     def Change_MES_folder_button_Function():
 
         settings.MES_folder_path = filedialog.askdirectory()
-        UI_terminal_Queue.put(f"MES folder: {settings.MES_folder_Path}")
+        UI_terminal_Queue.put(f"MES folder: {settings.MES_folder_path}")
         MES_Linker_Settings_Save()
 
 # -------------------------------------------- GUI ------------------------------------------------------------------------------------------------ #
