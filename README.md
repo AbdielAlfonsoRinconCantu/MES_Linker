@@ -107,12 +107,12 @@ match server_name:
 
 ### Adding new persistent variables:
 
-In `MES_Linker_Settings_Load()`, add:
+In `# Lists`, add:
 ```python
-defaults = {
-            ... ,
-            "<your_variable>": <your_default_value>
-           }
+station_variables = {
+    ...
+    "<your_variable_name>": "<your_variable_display_name>",
+}
 ```
 
 In `MES_Linker_Settings_Save()`, add:
@@ -121,16 +121,4 @@ data = {
         ... ,
         "<your_variable>": settings.<your_variable>
        }
-```
-
-In `Change_station_button_Function()`, add:
-```python
-settings.<your_variable> = <your_variable>_text_box.get().strip()
-
-...
-
-<your_variable>_Label = ...
-<your_variable>_Label.grid(...)
-<your_variable>_text_box = ...
-<your_variable>_text_box.insert(...)
 ```
