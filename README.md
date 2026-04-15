@@ -114,11 +114,3 @@ station_variables = {
     "<your_variable>": "<your_variable_display_name>",
 }
 ```
-
-In `MES_Linker_Settings_Save()`, add:
-```python
-data = {
-        ... ,
-        "<your_variable>": settings.<your_variable>
-       }
-```
