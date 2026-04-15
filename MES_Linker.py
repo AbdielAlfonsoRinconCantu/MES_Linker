@@ -5,18 +5,18 @@
 print("Initializing MES Linker...")
 print("Importing libraries...")
 
-from types import SimpleNamespace
-from tkinter import ttk, font, filedialog
-import json
-import sv_ttk
-import tkinter as tk
-import queue
-import threading
-import socket
-import datetime
-import shutil
-import os
 import pywinstyles
+import os
+import shutil
+import datetime
+import socket
+import threading
+import queue
+import tkinter as tk
+import sv_ttk
+import json
+from tkinter import ttk, font, filedialog
+from types import SimpleNamespace
 
 print("Importing libraries SUCCESS \n")
 
@@ -33,22 +33,30 @@ MES_Queue = queue.Queue()
 # Lists
 Active_Sockets = []
 
+station_variables = {
+    "Station_Name": "Station_Name",
+    "Station_Line": "Station_Line",
+    "Station_Type": "Station_Type",
+    "Station_OPID": "Station_OPID",
+}
+
+address_variables = {
+    "Device_1_Socket_Host": "127.0.0.2",
+    "Device_1_Socket_Port": 65431,
+    "MES_Socket_Host": "127.0.0.2",
+    "MES_Socket_Port": 65432
+}
+
+other_variables = {
+    "MES_folder_path": f"{os.getcwd()}",
+}
+
 # ------------------------------------------------ Global functions ------------------------------------------------------------------------------- #
 
 
 def MES_Linker_Settings_Load():
 
-    defaults = {
-        "Station_Name": "Station_Name",
-        "Station_Line": "Station_Line",
-        "Station_Type": "Station_Type",
-        "Station_OPID": "Station_OPID",
-        "MES_folder_path": f"{os.getcwd()}",
-        "Device_1_Socket_Host": "127.0.0.2",
-        "Device_1_Socket_Port": 65431,
-        "MES_Socket_Host": "127.0.0.2",
-        "MES_Socket_Port": 65432
-    }
+    defaults = {**station_variables, **address_variables, **other_variables}
 
     try:
         with open(MES_Linker_Settings, "r") as f:
@@ -298,13 +306,11 @@ def main():
 
             Close_all_sockets()
 
-            settings.Station_Name = Station_Label_text_box.get().strip()
-            settings.Station_Line = Line_Label_text_box.get().strip()
-            settings.Station_Type = Type_Label_text_box.get().strip()
-            settings.Station_OPID = OPID_Label_text_box.get().strip()
+            for key in station_variables.keys():
+                setattr(settings, key,
+                        station_variables_text_box_content[key].get().strip())
 
             MES_Linker_Settings_Save()
-
             Change_station_button_window.destroy()
             Start_socket_threads()
 
@@ -314,45 +320,26 @@ def main():
 
         pywinstyles.apply_style(Change_station_button_window, "mica")
 
-        Change_station_button_window_Row_2 = ttk.Frame(
-            Change_station_button_window)
-        Change_station_button_window_Row_2.pack(side=tk.BOTTOM)
-
         Change_station_button_window_frame = ttk.Frame(
             Change_station_button_window)
         Change_station_button_window_frame.pack(side=tk.TOP, padx=10, pady=10)
 
-        Station_Label = ttk.Label(
-            Change_station_button_window_frame, text=f"Station: ", font=Body_font)
-        Station_Label.grid(row=0, column=0, sticky=tk.W, padx=10, pady=10)
-        Station_Label_text_box = ttk.Entry(
-            Change_station_button_window_frame, font=Body_font, width=30)
-        Station_Label_text_box.grid(row=0, column=1, padx=10, pady=8)
-        Station_Label_text_box.insert(tk.END, f"{settings.Station_Name}")
+        Change_station_button_window_Row_2 = ttk.Frame(
+            Change_station_button_window)
+        Change_station_button_window_Row_2.pack(side=tk.BOTTOM)
 
-        Line_Label = ttk.Label(
-            Change_station_button_window_frame, text=f"Line: ", font=Body_font)
-        Line_Label.grid(row=1, column=0, sticky=tk.W, padx=10, pady=10)
-        Line_Label_text_box = ttk.Entry(
-            Change_station_button_window_frame, font=Body_font, width=30)
-        Line_Label_text_box.grid(row=1, column=1, padx=10, pady=8)
-        Line_Label_text_box.insert(tk.END, f"{settings.Station_Line}")
+        station_variables_text_box_content = {}
 
-        Type_Label = ttk.Label(
-            Change_station_button_window_frame, text=f"Type: ", font=Body_font)
-        Type_Label.grid(row=2, column=0, sticky=tk.W, padx=10, pady=10)
-        Type_Label_text_box = ttk.Entry(
-            Change_station_button_window_frame, font=Body_font, width=30)
-        Type_Label_text_box.grid(row=2, column=1, padx=10, pady=8)
-        Type_Label_text_box.insert(tk.END, f"{settings.Station_Type}")
+        for i, (key, label) in enumerate(station_variables.items()):
+            ttk.Label(Change_station_button_window_frame, text=f"{label}: ", font=Body_font).grid(
+                row=i, column=0, sticky=tk.W, padx=10, pady=10)
 
-        OPID_Label = ttk.Label(
-            Change_station_button_window_frame, text=f"OPID: ", font=Body_font)
-        OPID_Label.grid(row=3, column=0, sticky=tk.W, padx=10, pady=10)
-        OPID_Label_text_box = ttk.Entry(
-            Change_station_button_window_frame, font=Body_font, width=30)
-        OPID_Label_text_box.grid(row=3, column=1, padx=10, pady=8)
-        OPID_Label_text_box.insert(tk.END, f"{settings.Station_OPID}")
+            entry = ttk.Entry(Change_station_button_window_frame,
+                              font=Body_font, width=30)
+            entry.grid(row=i, column=1, padx=10, pady=8)
+            entry.insert(tk.END, getattr(settings, key))
+
+            station_variables_text_box_content[key] = entry
 
         Change_station_Accept_button = ttk.Button(
             Change_station_button_window_Row_2, text="Accept", command=Change_station_Accept_button_Function)
