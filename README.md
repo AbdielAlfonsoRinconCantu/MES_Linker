@@ -111,7 +111,7 @@ In `# Lists`, add:
 ```python
 station_variables = {
     ...
-    "<your_variable_name>": "<your_variable_display_name>",
+    "<your_variable>": "<your_variable_display_name>",
 }
 ```
 
